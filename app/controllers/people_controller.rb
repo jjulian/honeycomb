@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
   def update
     @person = Person.find(params[:id])
     @person.update_attributes(params[:person])
-    flash.now[:notice] = "Updates saved!"
+    flash[:notice] = "Updates saved!"
     redirect_to root_path
   end
   
