@@ -22,10 +22,7 @@ config.action_controller.perform_caching             = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-
-# For URL generation in ActionMailer
-DEFAULT_HOST = 'hive.beehivebaltimore.org'
-DEFAULT_PORT = '80'
+config.action_mailer.default_url_options = { :host => "hive.beehivebaltimore.org" }
 
 config.gem "daemons"
 

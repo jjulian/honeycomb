@@ -36,6 +36,9 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "appearances"
   map.resources :devices, :member => {:claim => :get, :assign => :post}
   map.resources :people, :member => {:confirm_device_for => :get}
+  map.login '/login', :controller => "person_sessions", :action => "new", :conditions => {:method => :get}
+  map.connect '/login', :controller => "person_sessions", :action => "create", :conditions => {:method => :post}
+  map.logout '/logout', :controller => "person_sessions", :action => "destroy"
   
   # See how all your routes lay out with "rake routes"
 
