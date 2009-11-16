@@ -9,7 +9,7 @@ class DevicesController < ApplicationController
     email = params[:person][:email]
     @device = Device.find(params[:id])
     @device.assign(email)
-    flash.now[:notice] = "A confirmation email has been sent to <strong>#{email}</strong>."
+    flash[:notice] = "A confirmation email has been sent to <strong>#{email}</strong>."
     redirect_to :controller => 'appearances'
   end
 end
