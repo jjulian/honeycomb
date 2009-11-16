@@ -13,7 +13,11 @@ class Device < ActiveRecord::Base
   end
   
   def assign(email)
-    person = Person.find_or_create_by_email(email)
+    person = Person.find_by_email(email)
+    unless person
+      person = Person.new({:email => email})
+      person.save_without_session_maintenance
+    end
     self.update_attribute(:person_id, person.id)
     PersonMailer.deliver_confirmation(self)
   end

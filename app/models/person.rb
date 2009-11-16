@@ -1,5 +1,9 @@
 require 'digest/md5'
 class Person < ActiveRecord::Base
+  acts_as_authentic do |c|
+    c.login_field :email
+  end
+
   has_many :devices
   has_many :appearances, :through => :devices
 
@@ -10,6 +14,8 @@ class Person < ActiveRecord::Base
   has_many :invoices, :through => :memberships
   
   validates_uniqueness_of :email, :allow_null => true
+  
+  before_validation_on_create :assign_random_password
     
   def gravatar_url
     gravatar_hash = Digest::MD5.hexdigest(email)
@@ -39,6 +45,12 @@ class Person < ActiveRecord::Base
   # Return true if *any* plan that this person is on has an anniversary today.
   def is_anniversary_day?
     memberships.active.select {|m| m.is_anniversary_day?}.size > 0
+  end
+  
+  protected
+  
+  def assign_random_password
+    self.password = self.password_confirmation = Array.new(20) { (rand(122-97) + 97).chr }.join if self.password.blank?
   end
 
 end
